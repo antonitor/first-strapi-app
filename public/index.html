@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>The blog</h2>
+    <div id="articles">
+      <!-- Articles Here-->
+    </div>
+  </body>
+  <script>
+    const displayArticles = async () => {
+      const res = await fetch("/articles");
+      const articles = await res.json();
+      console.log("ARTICLES: ", articles);
+      const articlesDiv = document.querySelector("#articles");
+      articles.forEach((article) => {
+        /** TITLE **/
+        const title = document.createElement("h2");
+        title.innerText = article.title;
+        articlesDiv.appendChild(title);
+
+        /** CONTENT **/
+        const content = document.createElement("p");
+        content.innerText = article.content;
+        articlesDiv.appendChild(content);
+
+        /** IMAGE **/
+        const image = document.createElement("img");
+        image.setAttribute("src", article.thumbnail.url);
+        articlesDiv.appendChild(image);
+      });
+    };
+
+    displayArticles();
+  </script>
+</html>
